@@ -3,6 +3,7 @@ use MyApp\data\Database;
             require("../../vendor/autoload.php");
             $db = new Database();
 
+           
             // Obtener los valores del formulario
 
 $nombre = $_POST['nombre'];
@@ -512,7 +513,7 @@ $sql_tel = "SELECT * from usuarios where telefono=$telefono";
 <?php
 	if(empty($verificacion_nombre) && empty($verificacion_correo)  &&  empty($verificacion_telefono)   && $contrasena1==$contrasena2  ){
 
-              $sql= "INSERT INTO personas (nombre, apellido, correo, info) VALUES ('$nombre', '$apellido','$correo',' ¡Hola! Estoy usando ChatPhone.')";
+              $sql= "INSERT INTO personas (nombre, apellido, correo, info) VALUES ('$nombre', '$apellido','$correo',' ¡Hola! Estoy usando El Pan Machin.')";
 							$db->ejecutarConsulta($sql);
 
               // Obtener id de persona registrada
@@ -520,13 +521,13 @@ $sql_tel = "SELECT * from usuarios where telefono=$telefono";
               $datos_persona=$db->seleccionarDatos($consulta_id_persona);
               foreach ($datos_persona as $datos) {
                $id_persona = $datos['id_persona']; //variable en la que se guarda el ID
-
+ 
 
                // Generar un hash de contraseña segura
               $hash_contrasena = password_hash($contrasena2, PASSWORD_DEFAULT);
 
         
-               $sql= "INSERT INTO usuarios (telefono,contrasena, id_persona) VALUES ($telefono, '$hash_contrasena', $id_persona)";
+               $sql= "INSERT INTO usuarios (telefono,contrasena, id_persona, tipo_usuario, imagen) VALUES ($telefono, '$hash_contrasena', $id_persona, 1,'profile.webp')";
                $db->ejecutarConsulta($sql);
 
               }
@@ -534,7 +535,7 @@ $sql_tel = "SELECT * from usuarios where telefono=$telefono";
 ?>
  <center>
         <div id="botonContainer" style="display:none;">
-            <button style="margin-left: -7%; border:none; border-radius:15px; background-color: #0071e3; color: white; padding: 10px 25px; " onclick="redirectToPage()">IniciZar sesión</button>
+            <button style="margin-left: -7%;border: 1px solid #cda45e;border-radius: 15px;background-color: #0c0b09;color: #ffffff;padding: 10px 25px; " onclick="redirectToPage()">Iniciar sesión</button>
         </div>
     </center>
 
@@ -547,7 +548,7 @@ $sql_tel = "SELECT * from usuarios where telefono=$telefono";
         // Función JavaScript para redirigir
         function redirectToPage() {
             // Cambia la URL a la que deseas redirigir
-            window.location.href = '../../views-index/login.php'; // Reemplaza con la URL que desees
+            window.location.href ='/panaderia/src/views/user/login.php'; // Reemplaza con la URL que desees
         }
     </script>
 <?php
@@ -561,7 +562,7 @@ $sql_tel = "SELECT * from usuarios where telefono=$telefono";
 
 <center>
         <div id="botonContainer" style="display:none;">
-            <button type="submit" style="margin-left: -7%; border:none; border-radius:15px; background-color: #0071e3; color: white; padding: 10px 25px; " name="crearchatphone" onclick="goBack()">Volver</button>
+            <button type="submit" style="margin-left: -7%; border:1px solid  #cda45e; border-radius:15px; background-color: #0c0b09; color: white; padding: 10px 25px; " name="crearchatphone" onclick="goBack()">Volver</button>
         </div>
     </center>
 

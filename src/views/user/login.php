@@ -3,11 +3,17 @@
  require("../../../vendor/autoload.php");
  $db = new Database;
 
+ session_start();
+
  $sql = "SELECT * from usuarios";
  $users=$db->seleccionarDatos($sql);
  
 
  //verificar el login
+
+
+    //ocultar warnings
+error_reporting(E_ERROR | E_PARSE);
 
      
  if($_POST){
@@ -33,7 +39,7 @@
        elseif($decrypted['tipo_usuario']==1){
          session_start();
         $_SESSION['user']=$id_usuario;
-        header("Location:hola.php");
+        header("Location: /panaderia/index.php");
         
       }
       
@@ -218,9 +224,12 @@
     if($_POST){
 
              if(!password_verify($password,$password_hash)) { 
-                 echo  "<div class='alert alert-danger text-center' role='alert' style='margin-left:10%; margin-top:-2%; margin-bottom:7%; margin-right:10%;'>
+                 echo  "
+                 <br><br>
+                 <div class='alert alert-danger text-center' role='alert' style='margin-left:10%; margin-top:-2%; margin-bottom:7%; margin-right:10%;'>
                  Contraseña o numero incorrecto.
-               </div>";  
+               </div>
+               ";  
                }
         
               }
@@ -228,7 +237,7 @@
          
          ?> 
 
-            <a href="#!" class="forgot-password-link">Olvido su contraseña?</a>
+            <a href="#!" class="forgot-password-link"style="color:#cda45e; text-decoration:none">Olvido su contraseña?</a>
             <p class="login-wrapper-footer-text">No tiene una cuenta? <a href="/panaderia/src/views/user/registrar.php" class="t" style="color: #cda45e">Registrese aqui!</a></p>
           </div>
         </center>

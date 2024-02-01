@@ -3,6 +3,7 @@
  require("../../../vendor/autoload.php");
  $db = new Database;
 
+ session_start();
  $sql = "SELECT * from usuarios";
  $users=$db->seleccionarDatos($sql);
 

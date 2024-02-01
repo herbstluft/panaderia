@@ -6,6 +6,6 @@ $db = new Database();
 session_start();
 
 session_destroy();
-header("Location: /src/views/user/login.php");
+header("Location: /panaderia/src/views/user/login.php");
 exit();
 ?>

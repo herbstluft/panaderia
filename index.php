@@ -7,6 +7,35 @@
  $users=$db->seleccionarDatos($sql);
 
 
+ session_start();
+
+ if(isset($_SESSION['user'])){
+  $id = $_SESSION['user'];
+ }
+
+
+
+ if(isset($_POST['opinion'])){
+
+  $asunto = $_POST['asunto'];
+  $tipo =  $_POST['tipo'];
+  $mensaje = $_POST['mensaje'];
+
+
+
+  $sql_insert_opinion = "INSERT INTO `comentarios_quejas` (`tipo_retroalimentacion`, `descripcion`, `id_usuario`, `fecha_creacion`) VALUES ('$tipo', '$mensaje', '$id', current_timestamp())";
+  $db->ejecutarConsulta($sql_insert_opinion);
+
+}
+
+
+//Opiniones de usuarios
+$sql_opiniones = "SELECT comentarios_quejas.*, usuarios.*, personas.* 
+                  FROM comentarios_quejas 
+                  INNER JOIN usuarios ON comentarios_quejas.id_usuario = usuarios.id_usuario 
+                  INNER JOIN personas ON personas.id_persona = usuarios.id_persona ";
+$opiniones_all = $db->seleccionarDatos($sql_opiniones);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +70,12 @@
 
 </head>
 
+<style>
+  .p::placeholder{
+    color:white
+  }
+</style>
+
 <body>
   
 <?php include('templates/navbar.php'); ?>
@@ -54,8 +89,21 @@
           <h2>Calidad que se siente en cada pedazo de nuestro pan, una experiencia que va más allá de lo común. Descubre el arte de saborear con nosotros.</h2>
 
           <div class="btns">
-            <a href="#menu" class="btn-menu animated fadeInUp scrollto">Hacer pedido</a>
-            <a href="/panaderia/src/views/user/login.php" class="btn-book animated fadeInUp scrollto">Inicie Sesion</a>
+           
+
+<?php
+if(isset($_SESSION['user'])){
+  echo '
+  <a href="#menu" class="btn-menu animated fadeInUp scrollto">Hacer pedido</a>
+  <a href="/panaderia/index.php#events" class="btn-book animated fadeInUp scrollto">Ver Ofertas</a>  ';
+}
+else{
+  echo '
+  <a href="/panaderia/src/views/user/login.php" class="btn-menu animated fadeInUp scrollto">Hacer pedido</a>
+  <a href="/panaderia/src/views/user/login.php" class="btn-book animated fadeInUp scrollto">Inicie Sesion</a>  ';
+
+}
+?>
           </div>
         </div>
         <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in" data-aos-delay="200">
@@ -160,9 +208,10 @@
           <div class="col-lg-6 menu-item filter-starters">
             <img src="https://tofuu.getjusto.com/orioneat-prod/D2avzku7x6H4pLN3S-hamburguesa-con-tocino.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Para Hamburguesa</a><span> <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-              </svg></span>
+              <a>Pan Para Hamburguesa</a><span> <a href="product_details.php"><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+</svg></a></span>
             </div>
             <div class="menu-ingredients">
               Esponjoso con la Excelencia de Harinas Finas, Levadura Fresca, Aceite de Oliva y un Toque de Miel.
@@ -172,9 +221,10 @@
           <div class="col-lg-6 menu-item filter-specialty">
             <img src="https://procinsa.net/wp-content/uploads/2022/11/hot-dog.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Para Hot Dog</a><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-              </svg></span>
+              <a>Pan Para Hot Dog</a><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+</svg></a></span>
             </div>
             <div class="menu-ingredients">
               La Base Perfecta para Tu Explosión de Sabores, Hecho con Esmero y Sabor Inigualable.
@@ -184,9 +234,10 @@
           <div class="col-lg-6 menu-item filter-starters">
             <img src="https://donpan.mx/wp-content/uploads/2023/11/Dogo-Especial-Mixto.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Para Cocodrilo</a><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-              </svg></span>
+              <a href="#">Pan Para Cocodrilo</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+</svg></a></span>
             </div>
             <div class="menu-ingredients">
               Crujiente por Fuera, Tierno por Dentro, una Experiencia Única de Harinas Premium y Técnicas Artesanales.
@@ -196,9 +247,10 @@
           <div class="col-lg-6 menu-item filter-salads">
             <img src="https://elcuadernodemisrecetas.com/wp-content/uploads/pan-baguette-frances-2.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Baguette</a><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-              </svg></span>
+              <a href="#">Pan Baguette</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+</svg></a></span>
             </div>
             <div class="menu-ingredients">
               La Elegancia del Pan Crujiente por Fuera, Suave por Dentro, Hecho con las Mejores Harinas para una Experiencia Auténtica.
@@ -208,9 +260,10 @@
           <div class="col-lg-6 menu-item filter-specialty">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgSwoudvoCrNEl38bWoWZr_7apXrG0z7UsC6jfPdtW1ZwwgfUH94x6-iqFOwmJESfIlPo&usqp=CAU" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Brioche</a><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-              </svg></span>
+              <a href="#">Pan Brioche</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+</svg></a></span>
             </div>
             <div class="menu-ingredients">
               Delicadeza en Cada Mordisco, la Fusión Perfecta de Mantequilla, Huevos y Harinas Selectas para un Placer Dulce y Esponjoso.
@@ -367,56 +420,33 @@
             <div class="swiper-slide">
               <div class="row event-item">
                 <div class="col-lg-6">
-                  <img src="assets/img/event-private.jpg" class="img-fluid" alt="">
+                  <img style="border-radius:20px" src="https://media.istockphoto.com/id/929922456/es/vector/r%C3%A1pido-servicio-de-env%C3%ADo-icono-con-r%C3%A1pido-de-conducci%C3%B3n-de-camiones-ilustraci%C3%B3n-plano.jpg?s=612x612&w=0&k=20&c=4W7XJwDIGfTjoM9oWXyJfqXnX1l6RXPgeSrjQUUMHE0=" class="img-fluid" alt="">
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Private Parties</h3>
+                  <h3>¡Envío GRATIS! 🍔🌭🥐<br><br> Disfruta del sabor con comodidad en tu hogar🚚</h3>
                   <div class="price">
-                    <p><span>$290</span></p>
+                    
                   </div>
                   <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
+                  ¿Te antoja disfrutar de panes frescos para hamburguesas, hot dogs, cocodrillos briochete y baguettes sin salir de casa? ¡Tenemos una oferta especial para ti! Ahora, cuando pidas tus panes favoritos, te los llevamos directamente a tu puerta con <b>envío completamente GRATIS.</b> 🏡✨
                   </p>
-                  <ul>
-                    <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                    <li><i class="bi bi-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                    <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                  </ul>
-                  <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur
-                  </p>
+            
+                  
+                <p><b>  🌟Razones para elegirnos:</b></p>
+
+                <ul>
+                  <li><b>Variedad irresistible:</b> Desde suaves briochetes para cocodrillos hasta baguettes crujientes, nuestro menú se adapta a todos los gustos.</li>
+                  <li><b>Frescura garantizada:</b> Seleccionamos los mejores ingredientes para ofrecerte panes de calidad.</li>
+                  <li> <b>Envío GRATIS: </b>Pedir tus panes preferidos es aún mejor cuando el envío es totalmente gratuito.</li>
+                </ul>
+                  
+
+  
                 </div>
               </div>
             </div><!-- End testimonial item -->
 
-            <div class="swiper-slide">
-              <div class="row event-item">
-                <div class="col-lg-6">
-                  <img src="assets/img/event-custom.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Custom Parties</h3>
-                  <div class="price">
-                    <p><span>$99</span></p>
-                  </div>
-                  <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
-                  </p>
-                  <ul>
-                    <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                    <li><i class="bi bi-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                    <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                  </ul>
-                  <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
+       
 
           </div>
           <div class="swiper-pagination"></div>
@@ -431,85 +461,64 @@
     <section id="testimonials" class="testimonials section-bg">
       <div class="container" data-aos="fade-up">
 
+
+
+
         <div class="section-title">
           <h2>Testimonios</h2>
-          <p>Lo que dicen de nosotros</p>
+          <p>Lo que dicen de nosotros</p><br>
+
+          <?php
+          if(empty($opiniones_all)){
+
+              echo '  <center>          <p style="color:white">Aun no hay opiniones</p>     </center>';
+          }
+            ?>
+        
         </div>
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
 
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-              </div>
-            </div><!-- End testimonial item -->
+        
+          <?php
+            foreach($opiniones_all as $opiniones){
+            ?>
 
-            <div class="swiper-slide">
+          <div class="swiper-slide">
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  <?php echo $opiniones['descripcion'] ?>
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
+                <img src="assets/img/profile.webp" class="testimonial-img" alt="">
+                <h3> <?php echo $opiniones['nombre'] ?></h3>
+                <h4>  <?php echo $opiniones['tipo_retroalimentacion'] ?></h4>
               </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div><!-- End testimonial item -->
+          </div><!-- End testimonial item -->
+            <?php
+            }
+          ?>
+           
 
           </div>
           <div class="swiper-pagination"></div>
         </div>
 
+
+
+
+
+
+
+
       </div>
     </section><!-- End Testimonials Section -->
+
+
+
+
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery">
@@ -527,32 +536,32 @@
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-1.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/1.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/1.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-2.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/5.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/5.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-3.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-3.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/8.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/8.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-4.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-4.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/9.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/9.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
@@ -694,13 +703,11 @@
                 <i class="bi bi-clock"></i>
                 <h4>Horario:</h4>
                 <p>
-                  <b>Domicilio</b> <br>
-                  Mnday-Saturday:<br>
-                  11:00 AM - 2300 PM <br><br>
+                  
 
-                  <b>Horario Tienda</b>
-                  Monday-Saturday: <br>
-                  11:00 AM- 23:00 PM
+        
+                  Lunes-Sabado: <br>
+                  08:00 AM- 18:00 PM
 
                 </p>
               </div>
@@ -721,37 +728,88 @@
 
           </div>
 
+          
+        <?php
+
+          if(isset($_SESSION['user'])){
+            ?>
+
+            
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-           <center><h3> Redacte su opinion</h3></center> <br>
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Asunto" required>
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <select class="form-select" aria-label="Default select example" style="background-color: transparent; color: #ada694; margin-top: 2px; border-color: #ada6949d;">
-                    <option value="1">Queja</option>
-                    <option value="2">Sugerencia</option>
-                  </select>
-                </div>
-              </div>
+<form action="index.php" method="post" role="form" class="" >
+<center><h3> Redacte su opinion</h3></center> <br>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <input type="text" name="asunto" class="p form-control" id="name" placeholder="Asunto" required style="background: #0c0b09;color:white; border-radius:0px; border-color: #625b4b; font-size:14px; ::placeholder:white;">
+    </div>
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      <select name="tipo" class="form-select" aria-label="Default select example" style="background-color: transparent; color: #ada694; margin-top: 2px; border-color: #ada6949d;">
+        <option value="Queja">Queja</option>
+        <option value="Sugerencia">Sugerencia</option>
+        <option value="Cumplido">Cumplido</option>
+      </select>
+    </div>
+  </div>
 
-              
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="8" placeholder="Mensaje" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Enviar Opinion</button></div>
-            </form>
+  
+  <div class="form-group mt-3">
+    <textarea class="p form-control" name="mensaje" rows="8" placeholder="Mensaje" required style="background: #0c0b09;color:white; border-radius:0px; border-color: #625b4b; font-size:14px; ::placeholder:white;" ></textarea>
+  </div>
+  <div class="my-3">
+   <br>
+  </div>
+  <div class="text-center"><button name="opinion" style="background:#cda45e; color:white; border:1px solid #625b4b; padding:10px; border-radius:10px; " type="submit">Enviar Opinion</button></div>
+</form>
 
-          </div>
+</div>
 
-        </div>
+</div>
+
+          <?php
+          }
+          else{
+            ?>
+
+
+<div class="col-lg-8 mt-5 mt-lg-0">
+
+<form action="forms/contact.php" method="post" role="form" class="php-email-form">
+<center><h3> Redacte su opinion</h3></center> <br>
+<center style="color:burlywood">Inicie Sesion para poder redactar su opinion.</center><br>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Asunto"  aria-label="Disabled select example" disabled>
+    </div>
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      <select class="form-select"  aria-label="Disabled select example" disabled style="background-color: transparent; color: #ada694; margin-top: 2px; border-color: #ada6949d;">
+        <option value="1">Queja</option>
+        <option value="2">Sugerencia</option>
+      </select>
+    </div>
+  </div>
+
+  
+  <div class="form-group mt-3">
+    <textarea class="form-control" name="message" rows="8" placeholder="Mensaje"  aria-label="Disabled select example" disabled></textarea>
+  </div>
+  <div class="my-3">
+    <div class="loading">Loading</div>
+    <div class="error-message"></div>
+    <div class="sent-message">Your message has been sent. Thank you!</div>
+  </div>
+  <div class="text-center"><button  aria-label="Disabled select example" disabled type="submit">Enviar Opinion</button></div>
+</form>
+
+</div>
+
+</div>
+
+
+          <?php
+          }
+
+        ?>
 
       </div>
     </section><!-- End Contact Section -->
