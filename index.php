@@ -8,6 +8,8 @@ $db = new Database;
 $sql = "SELECT * from usuarios";
 $users = $db->seleccionarDatos($sql);
 
+$sql_products = "select * from productos inner join img_productos on img_productos.id_producto=productos.id_producto";
+$productos = $db->seleccionarDatos($sql_products);
 
 session_start();
 
