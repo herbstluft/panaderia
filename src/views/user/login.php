@@ -23,11 +23,15 @@ error_reporting(E_ERROR | E_PARSE);
         where usuarios.telefono='$phone'";
         $date_person=$db->seleccionarDatos($consulta_hash);
         
-        foreach ($date_person as $decrypted)
-        $password_hash= $decrypted['contrasena'];
-    
-        $id_usuario=$decrypted['id_usuario'];
-        
+        foreach ($date_person as $decrypted) {
+            $id=$decrypted['id_'];
+            $password_hash= $decrypted['contrasena'];
+            $id_usuario=$decrypted['id_usuario'];
+            $nombre_usuario=$decrypted['nombre']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
+            $correo_usuario=$decrypted['correo']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
+            $apellido_persona=$decrypted['apellido'];
+
+        }
 
       if(password_verify($password,$password_hash)){
        
@@ -39,6 +43,14 @@ error_reporting(E_ERROR | E_PARSE);
        elseif($decrypted['tipo_usuario']==1){
          session_start();
         $_SESSION['user']=$id_usuario;
+        $_SESSION['user_phone'] = $phone;
+        $_SESSION['user_password'] = $password;
+        $_SESSION['user_name'] = $nombre_usuario; // Agregamos el nombre del usuario a la sesión
+        $_SESSION['correo'] = $correo_usuario; 
+        $_SESSION['apellido'] = $apellido_persona;
+
+        
+
         header("Location: /panaderia/index.php");
         
       }
@@ -47,6 +59,7 @@ error_reporting(E_ERROR | E_PARSE);
     }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -206,7 +219,7 @@ error_reporting(E_ERROR | E_PARSE);
           </div>
           <div class="login-wrapper my-auto">
             <h1 class="login-title">Iniciar Sesion</h1>
-            <form action="" method="post">
+            <form id ="form1" action="" method="post">
               <div class="form-group">
                 <label for="email">Numero de Telefono</label>
                 <input type="number" name="phone" id="number" class="form-control" placeholder="Numero de telefono">
@@ -216,9 +229,16 @@ error_reporting(E_ERROR | E_PARSE);
                 <label for="password">Contraseña</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña">
               </div>
-              
-              <input name="login" id="login" class="btn btn-block login-btn" type="submit" value="Iniciar Sesion">
+
+              <input name="login" id="login" class="btn btn-block login-btn" type="submit" onclick="enviarFormularios()" value="Iniciar Sesion">
+
             </form>
+
+
+           
+            
+            
+            
 
             <?php
     if($_POST){

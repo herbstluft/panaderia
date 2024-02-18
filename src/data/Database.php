@@ -44,6 +44,11 @@ class Database
             return null;
         }
     }
+
+    public function sanitize($data)
+    {
+        return trim($this->conn->quote($data), "'");
+    }
 }
 
 

@@ -41,10 +41,11 @@
 
 
       <?php
+      
       if(isset($_SESSION['user'])){
        $id = $_SESSION['user'];
-$sql="select * from usuarios inner join personas on personas.id_persona=usuarios.id_persona where usuarios.id_usuario  = $id ";
-$info_user = $db->seleccionarDatos($sql);
+        $sql="select * from usuarios inner join personas on personas.id_persona=usuarios.id_persona where usuarios.id_usuario  = $id ";
+        $info_user = $db->seleccionarDatos($sql);
 
 
 foreach($info_user as $user)
@@ -95,7 +96,7 @@ foreach($info_user as $user)
 
   <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-check fa-fw me-2"></i>Mis pedidos</a></li>
   <li><a class="dropdown-item" href="#"><i class="bi bi-heart fa-fw me-2"></i>Mis Compras</a></li>
-  <li><a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw me-2"></i>Configuracion</a></li>
+  <li><a class="dropdown-item" href="/panaderia/src/views/configuracion.php"><i class="bi bi-gear fa-fw me-2"></i>Configuracion</a></li>
   <li><a class="dropdown-item bg-danger-soft-hover" href="/panaderia/src/scripts/logout.php"><i class="bi bi-power fa-fw me-2"></i>Cerrar sesión</a></li>
 
 
