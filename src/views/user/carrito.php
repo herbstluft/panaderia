@@ -177,10 +177,11 @@ session_start();
                 </div>
                 <div class="m-auto h-100 d-flex justify-content-center">
                     <?php
-                    $sql_carrito = "SELECT 'img_productos', 'productos', 'detalle_orden' 
+                    $sql_carrito = "SELECT 'img_productos.*', 'productos.*', 'detalle_orden.*', 'orden.*'
                                 FROM detalle_orden 
+                                INNER JOIN orden ON detalle_orden.id_usuario = orden.id_usuario
                                 INNER JOIN productos ON detalle_orden.id_producto = productos.id_producto 
-                                INNER JOIN img_productos ON img_productos.id_producto = productos.id_producto";
+                                INNER JOIN img_productos ON productos.id_producto = img_productos.id_producto";
                     $carrto_all = $db->seleccionarDatos($sql_carrito);
 
                     if (empty($carrto_all)) {
@@ -210,7 +211,7 @@ session_start();
                 </div>
             </section>
             <section class="col-md-4 col-sm-12">
-                <div class="h-100 card bg-transparent border p-2">
+                <div class="h-100 card bg-transparent border p-2 ms-md-4">
                     <div class="card-body">
                         <h4 class="card-title text-warning border-bottom ps-3 pb-4">Total del carrito</h4>
                         <?php
@@ -232,6 +233,9 @@ session_start();
                                 <span>Total:</span>
                                 <span>0</span>
                             </div>
+                            <form action="">
+                                <button class="w-100 rounded-2 bg-warning text-light opacity-50" disabled style="cursor: pointer;">Pagar</button>
+                            </form>
                         <?php
                         }
                         ?>
@@ -240,6 +244,84 @@ session_start();
             </section>
         </article>
     </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id=" footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-info">
+                            <b>
+                                <h3>El Pan Machin</h3>
+                            </b>
+                            <p>
+                                José López Portillo esquina con Irapuato #10 Colonia 5 de febrero<br><br>
+                                <strong>Telefono:</strong> +52 871-642-2929 <br>
+                                <strong>Correo:</strong> info@example.com<br>
+                            </p>
+                            <div class="social-links mt-3">
+                                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Acerca</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Menu</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Menu Detallado</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Ofertas</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <br>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Chefs</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Galeria</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Contacto </a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">TecnoCode </a></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 footer-newsletter">
+                        <h4>Our Newsletter</h4>
+                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Subscribe">
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>ElPanMachin</span></strong>. Todos los derechos reservados
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
+                Desarrollado por <a href="https://bootstrapmade.com/">TecnoCode</a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
 
