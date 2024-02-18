@@ -56,7 +56,7 @@ session_start();
   }
 
   input[type="submit"]:hover {
-    border-radius 10px;
+    border-radius: 10px;
   }
 
 
