@@ -821,7 +821,6 @@ $opiniones_all = $db->seleccionarDatos($sql_opiniones);
   </main><!-- End #main -->
 
   <?php include('templates/footer.php'); ?>
-
 </body>
 
 </html>
