@@ -94,7 +94,7 @@
 
 
 
-          <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-check fa-fw me-2"></i>Mis pedidos</a></li>
+          <li><a class="dropdown-item" href="/panaderia/src/views/user/mis_pedidos.php"><i class="bi bi-bookmark-check fa-fw me-2"></i>Mis pedidos</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-heart fa-fw me-2"></i>Mis Compras</a></li>
           <li><a class="dropdown-item" href="/panaderia/src/views/configuracion.php"><i class="bi bi-gear fa-fw me-2"></i>Configuracion</a></li>
           <li><a class="dropdown-item bg-danger-soft-hover" href="/panaderia/src/scripts/logout.php"><i class="bi bi-power fa-fw me-2"></i>Cerrar sesión</a></li>
