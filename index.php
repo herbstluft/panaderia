@@ -206,70 +206,31 @@ $opiniones_all = $db->seleccionarDatos($sql_opiniones);
 
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
 
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="https://tofuu.getjusto.com/orioneat-prod/D2avzku7x6H4pLN3S-hamburguesa-con-tocino.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a>Pan Para Hamburguesa</a><span> <a href="product_details.php"><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                  </svg></a></span>
-            </div>
-            <div class="menu-ingredients">
-              Esponjoso con la Excelencia de Harinas Finas, Levadura Fresca, Aceite de Oliva y un Toque de Miel.
-            </div>
-          </div>
 
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="https://procinsa.net/wp-content/uploads/2022/11/hot-dog.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a>Pan Para Hot Dog</a><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg></a></span>
-            </div>
-            <div class="menu-ingredients">
-              La Base Perfecta para Tu Explosión de Sabores, Hecho con Esmero y Sabor Inigualable.
-            </div>
-          </div>
+          <?php
+          foreach($productos as $producto){
+            ?>
 
           <div class="col-lg-6 menu-item filter-starters">
-            <img src="https://donpan.mx/wp-content/uploads/2023/11/Dogo-Especial-Mixto.jpg" class="menu-img" alt="">
+            <img src="/panaderia/assets/img/images_product/<?php echo $producto['nombre_imagen'];?>" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Pan Para Cocodrilo</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+              <a>  <?php echo $producto['nom_producto'];?> </a><span> <a href="/panaderia/src/views/user/product_details.php?id=<?php echo $producto['id_producto'];?>"><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                   </svg></a></span>
             </div>
             <div class="menu-ingredients">
-              Crujiente por Fuera, Tierno por Dentro, una Experiencia Única de Harinas Premium y Técnicas Artesanales.
+            <?php echo $producto['descripcion'];?>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
-            <img src="https://elcuadernodemisrecetas.com/wp-content/uploads/pan-baguette-frances-2.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Pan Baguette</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                  </svg></a></span>
-            </div>
-            <div class="menu-ingredients">
-              La Elegancia del Pan Crujiente por Fuera, Suave por Dentro, Hecho con las Mejores Harinas para una Experiencia Auténtica.
-            </div>
-          </div>
 
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgSwoudvoCrNEl38bWoWZr_7apXrG0z7UsC6jfPdtW1ZwwgfUH94x6-iqFOwmJESfIlPo&usqp=CAU" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Pan Brioche</a><span><a href=""><svg style="color:#cda45e" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                  </svg></a></span>
-            </div>
-            <div class="menu-ingredients">
-              Delicadeza en Cada Mordisco, la Fusión Perfecta de Mantequilla, Huevos y Harinas Selectas para un Placer Dulce y Esponjoso.
-            </div>
-          </div>
+          <?php
+          }
+          ?>
+
+       
+          
 
 
         </div>

@@ -1,3 +1,31 @@
+<?php
+
+use MyApp\data\Database;
+
+require("../../../vendor/autoload.php");
+$db = new Database;
+
+
+if(isset($_GET['id'])){
+  $id_producto = $_GET['id'];
+  $sql_product = "select * from productos inner join img_productos on img_productos.id_producto=productos.id_producto where productos.id_producto=$id_producto";
+$producto = $db->seleccionarDatos($sql_product);
+
+
+
+
+}
+
+session_start();
+
+if (isset($_SESSION['user'])) {
+  $id = $_SESSION['user'];
+}
+
+?>
+
+  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -282,21 +310,21 @@
 <!------ Include the above in your HEAD tag ---------->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"><div class="pd-wrap">
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/panaderia/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="/panaderia/assets/css/style.css" rel="stylesheet">
 
 
   
     
-<?php include('templates/navbar.php'); ?>
+<?php include('../../../templates/navbar.php'); ?>
   
 <br><br><br>  
   <div class="container">
@@ -304,41 +332,44 @@
               <h2>Detalle De Producto</h2>
           </div>
           
+
+          <?php 
+foreach($producto as $producto){
+  $nombre = $producto['nom_producto'];
+  $precio = $producto['precio'];
+  $descripcion = $producto['descripcion'];
+  $existencia = $producto['existencia'];
+  $imagen = $producto['nombre_imagen'];
+              ?>
+
           <div class="row">
             <div class="col-md-6">
               <div id="slider" class="product-slider">
             <div class="item">
-                <img style="border-radius:10px; width:100%; margin-bottom:20px;" src="https://img.freepik.com/foto-gratis/retrato-abstracto-ojo-elegancia-mujeres-jovenes-generado-ai_188544-9712.jpg" />
+                <img style="border-radius:10px; width:100%; margin-bottom:20px;" src="/panaderia/assets/img/images_product/<?php echo $imagen; ?> " />
             </div>
           </div>
         
 
             </div>
+
             <div class="col-md-6">
               <div class="product-dtl">
                 <div class="product-info">
-                  <div class="product-name">Variable Product</div>
+                  <div class="product-name"><?php echo $nombre?></div>
                  
-                  <div class="product-price-discount"><span>$39.00</span></div>
+                  <div class="product-price-discount"><span><?php echo "$ ". number_format($precio,2); ?></span></div>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p><?php echo $descripcion?></p>
                 <div class="row">
                   <div class="col-md-6">
                     <label for="size">Existencia</label>
                 <select id="size" name="size" class="form-control" style="background:#28251f;color:white; outline:none; border:1px solid #cda45e"  aria-label="Disabled select example" disabled>
-                  <option>5 panes</option>
+                  <option><?php echo $existencia. " Panes"?></option>
                
                 </select>
                   </div>
-                  <div class="col-md-6">
-                    <label for="color">Tipo de Entrega</label>
-                <select id="color" name="color" class="form-control" style="background:#28251f;color:white; outline:none; border:1px solid #cda45e">
-                  <option>En Tienda </option>
-                  <option>Servicio a domicilio</option>
-                  
-                </select>
-                  </div>
-                </div>
+                 <br><br><br><br>
                 <div class="product-count">
                   <label for="size">Cantidad</label>
                   <form action="#" class="display-flex">
@@ -346,92 +377,39 @@
                   <input type="text" style="background:#28251f; border-radius:5px; color:white; outline:none; border:0px " name="quantity" value="1" class="qty">
                   
               </form>
-              <a href="#" class="round-black-btn">Añadir al carrito</a>
-                </div>
+
+              <br>
+  <center>              <button type="button" class="btn btn-warning">Añadir al carrito</button>  </center>
+            </div>
               </div>
             </div>
           </div>
-          <div class="product-info-tabs">
+
+
+          <?php
+  }
+?>
+
+
+
+
+          <div class="product-info-tabs" style="margin-top:40px">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Opciones De Entrega</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false"> Redacte Su Opinion</a>
-            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab" style="color:white">
-<h2 style="color:#cda45e">Nota</h2>
+<h2 style="color:#cda45e">Opciones de Entrega</h2>
 <p><b>Opción 1: Recoger en Tienda </b></p>
 <p>Si decides elegir la opción "En Tienda" al comprar tu pan a través de nuestra página, te ofrecemos la conveniencia de recoger tu pedido directamente en nuestra tienda. Después de realizar la compra, podrás pasarte por nuestro establecimiento en el horario que mejor se adapte a ti. Esta alternativa es ideal para aquellos que prefieren una recogida rápida y desean disfrutar de la frescura de nuestros productos en el mismo día.</p>
       
 <br>
 
-<p><b>Servicio a Domicilio</b></p>
+<p><b>Opcion 2: Servicio a Domicilio</b></p>
 <p>Para quienes buscan aún más comodidad, hemos habilitado la opción "Servicio a Domicilio". Al seleccionar esta alternativa, nos encargaremos de llevar el pan directamente a la puerta de tu hogar sin costo adicional. Disfruta de la máxima conveniencia y ahorra tiempo, permitiéndonos encargarnos de la entrega para que puedas relajarte y disfrutar de nuestros deliciosos productos en la comodidad de tu casa.</p></div>
-            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-        
-
-            <h4>Mas Productos Relacionados</h4>
-            <br>
-
-           
-            <div class="row">
-              
-
-            <div class="col-sm-6 col-xl-3" style="margin-top:15px;  margin:bottom:15px">
-            <div class="card overflow-hidden rounded-2">
-              <div class="position-relative">
-                <a href="javascript:void(0)">
-
-                
-                <img src="https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" class="d-block w-100" height="310px" &nbsp;alt="..."></a>
-
-                <a href="javascript:void(0)" class="bg-success rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
-                  </svg>
-                </a>                      
-              </div>
-              <div class="card-body pt-3 p-4">
-                    <div style="width:100%;">
-                    <h6 class="fw-semibold fs-4 text-truncate">Dragon Ball Z: Kakarot Dragon Ball Z Standard Edition Bandai Namco Xbox One Físico </h6>
-                    </div>
-                <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="fw-semibold fs-4 mb-0">$ 1000.99</h6>
-                  <ul class="list-unstyled d-flex align-items-center mb-0">
-                    <!-- <li style="margin-left:2px; margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#FFD800" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                    </svg>
-                    </li>
-                    <li style="margin-left:2px; margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#FFD800" class="bi bi-star-fill" viewBox="0 0 16 16">
-                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                  </svg>
-                  </li>
-                  <li style="margin-left:2px; margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#FFD800" class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                </svg>
-                </li>
-                <li style="margin-left:2px; margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#FFD800" class="bi bi-star-fill" viewBox="0 0 16 16">
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-              </li>
-              <li style="margin-left:2px; margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#FFD800" class="bi bi-star-fill" viewBox="0 0 16 16">
-                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-            </svg>
-            </li> -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            
-
-
-            </div>
-
-
-            </div>
+  
         </div>
       </div>
       
@@ -441,5 +419,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity=" sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
+
+  <?php include('../../../templates/footer.php'); ?>
+  
+
 </body>
 </html>
