@@ -7,6 +7,16 @@ require("../../../vendor/autoload.php");
 $db = new Database;
 
 session_start();
+
+$id_usuario = $_SESSION['id_usuario'];
+
+$sql_carrito = "SELECT do.*, p.*, ip.*
+                    FROM detalle_orden do
+                    JOIN productos p ON do.id_producto = p.id_producto
+                    LEFT JOIN img_productos ip ON p.id_producto = ip.id_producto
+                    WHERE do.id_usuario = '$id_usuario'";
+$carrito_all = $db->seleccionarDatos($sql_carrito);
+
 ?>
 
 <!DOCTYPE html>
@@ -55,53 +65,45 @@ session_start();
                 </div>
                 <div class="m-auto h-100 d-flex justify-content-center">
                     <?php
-                    if (isset($_POST['id_usuario'])) {
-                        $id_usuario = $_POST['usuario'];
-                        $sql_carrito = "SELECT do.*, p.*, ip.*
-                                    FROM detalle_orden do
-                                    JOIN productos p ON do.id_producto = p.id_producto
-                                    LEFT JOIN img_productos ip ON p.id_producto = ip.id_producto
-                                    WHERE do.id_usuario = $id_usuario";
-                        $carrto_all = $db->seleccionarDatos($sql_carrito);
 
-                        if (empty($carrto_all)) {
+
+                    if (empty($carrito_all)) {
                     ?>
 
-                            <div class="d-flex align-items-center gap-3" style="opacity: 30%;">
-                                <img src="../../../assets/img/oops.png" alt="" width="72px">
-                                <span>No has agregado <br> nada a tu carrito</span>
-                            </div>
-                        <?php
-                        } else {
-                        ?>
-                            <table class="table table-dark text-end">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Producto</th>
-                                        <th>Precio</th>
-                                        <th>Cantidad</th>
-                                        <th>Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <?php
-                                        foreach ($carrito_all as $producto) {
-                                        ?>
-                                            <td> <?php $producto['nombre_imagen'] ?> </td>
-                                            <td> <?php $producto['producto'] ?> </td>
-                                            <td> <?php $producto['precio'] ?> </td>
-                                            <td> <?php $producto['cantidad'] ?> </td>
-                                            <td> <?php $producto['subtotal'] ?> </td>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="d-flex align-items-center gap-3" style="opacity: 30%;">
+                            <img src="../../../assets/img/oops.png" alt="" width="72px">
+                            <span>No has agregado <br> nada a tu carrito</span>
+                        </div>
                     <?php
-                        }
+                    } else {
+                    ?>
+                        <table class="table table-dark text-end">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <?php
+                                    foreach ($carrito_all as $producto) {
+                                    ?>
+                                        <td> <?php echo $producto['nombre_imagen'] ?> </td>
+                                        <td> <?php echo $producto['producto'] ?> </td>
+                                        <td> <?php echo $producto['precio'] ?> </td>
+                                        <td> <?php echo $producto['cantidad'] ?> </td>
+                                        <td> <?php echo $producto['subtotal'] ?> </td>
+                                    <?php
+                                    }
+                                    ?>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <?php
                     }
                     ?>
                 </div>

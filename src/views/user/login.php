@@ -1,62 +1,62 @@
-<?php 
- use MyApp\data\Database;
- require("../../../vendor/autoload.php");
- $db = new Database;
+<?php
 
- session_start();
+use MyApp\data\Database;
 
- $sql = "SELECT * from usuarios";
- $users=$db->seleccionarDatos($sql);
- 
+require("../../../vendor/autoload.php");
+$db = new Database;
 
- //verificar el login
+session_start();
+
+$sql = "SELECT * from usuarios";
+$users = $db->seleccionarDatos($sql);
 
 
-    //ocultar warnings
+//verificar el login
+
+
+//ocultar warnings
 error_reporting(E_ERROR | E_PARSE);
 
-     
- if($_POST){
+
+if ($_POST) {
   extract($_POST);
-        $consulta_hash="Select * from usuarios inner join
+  $consulta_hash = "Select * from usuarios inner join
         personas on personas.id_persona=usuarios.id_persona 
         where usuarios.telefono='$phone'";
-        $date_person=$db->seleccionarDatos($consulta_hash);
-        
-        foreach ($date_person as $decrypted) {
-            $id=$decrypted['id_'];
-            $password_hash= $decrypted['contrasena'];
-            $id_usuario=$decrypted['id_usuario'];
-            $nombre_usuario=$decrypted['nombre']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
-            $correo_usuario=$decrypted['correo']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
-            $apellido_persona=$decrypted['apellido'];
+  $date_person = $db->seleccionarDatos($consulta_hash);
 
-        }
+  foreach ($date_person as $decrypted) {
+    $id = $decrypted['id_'];
+    $password_hash = $decrypted['contrasena'];
+    $id_usuario = $decrypted['id_usuario'];
+    $nombre_usuario = $decrypted['nombre']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
+    $correo_usuario = $decrypted['correo']; // Asegúrate de que 'nombre' es el nombre correcto del campo en tu base de datos
+    $apellido_persona = $decrypted['apellido'];
+  }
 
-      if(password_verify($password,$password_hash)){
-       
-       if($decrypted['tipo_usuario']==0){
-         session_start();
-         $_SESSION['admin']=$id_usuario;
-         header("Location: /src/views/admin/index.php");
-       }
-       elseif($decrypted['tipo_usuario']==1){
-         session_start();
-        $_SESSION['user']=$id_usuario;
-        $_SESSION['user_phone'] = $phone;
-        $_SESSION['user_password'] = $password;
-        $_SESSION['user_name'] = $nombre_usuario; // Agregamos el nombre del usuario a la sesión
-        $_SESSION['correo'] = $correo_usuario; 
-        $_SESSION['apellido'] = $apellido_persona;
+  $_SESSION['id_usuario'] = $id_usuario;
 
-        
+  if (password_verify($password, $password_hash)) {
 
-        header("Location: /panaderia/index.php");
-        
-      }
-      
-     }
+    if ($decrypted['tipo_usuario'] == 0) {
+      session_start();
+      $_SESSION['admin'] = $id_usuario;
+      header("Location: /src/views/admin/index.php");
+    } elseif ($decrypted['tipo_usuario'] == 1) {
+      session_start();
+      $_SESSION['user'] = $id_usuario;
+      $_SESSION['user_phone'] = $phone;
+      $_SESSION['user_password'] = $password;
+      $_SESSION['user_name'] = $nombre_usuario; // Agregamos el nombre del usuario a la sesión
+      $_SESSION['correo'] = $correo_usuario;
+      $_SESSION['apellido'] = $apellido_persona;
+
+
+
+      header("Location: /panaderia/index.php");
     }
+  }
+}
 
 ?>
 
@@ -97,173 +97,213 @@ error_reporting(E_ERROR | E_PARSE);
 </head>
 
 <style>
+  .brand-wrapper {
+    padding-top: 7px;
+    padding-bottom: 8px;
+  }
 
-.brand-wrapper {
-  padding-top: 7px;
-  padding-bottom: 8px; }
   .brand-wrapper .logo {
-    height: 125px; }
+    height: 125px;
+  }
 
-.login-section-wrapper {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  padding: 68px 100px;
-  background-color: #0c0b09; }
+  .login-section-wrapper {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding: 68px 100px;
+    background-color: #0c0b09;
+  }
+
   @media (max-width: 991px) {
     .login-section-wrapper {
       padding-left: 50px;
-      padding-right: 50px; } }
+      padding-right: 50px;
+    }
+  }
+
   @media (max-width: 575px) {
     .login-section-wrapper {
       padding-top: 20px;
       padding-bottom: 20px;
-      min-height: 100vh; } }
+      min-height: 100vh;
+    }
+  }
 
-.login-wrapper {
-  width: 80%;
-  max-width: 100%;
-  padding-top: 24px;
-  padding-bottom: 24px; }
+  .login-wrapper {
+    width: 80%;
+    max-width: 100%;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
   @media (max-width: 575px) {
     .login-wrapper {
-      width: 100%; } }
+      width: 100%;
+    }
+  }
+
   .login-wrapper label {
     font-size: 14px;
     font-weight: bold;
-    color: #b0adad; }
+    color: #b0adad;
+  }
+
   .login-wrapper .form-control {
     border: none;
-    background:#0c0b09;    border-bottom: 1px solid #cda45e;
+    background: #0c0b09;
+    border-bottom: 1px solid #cda45e;
     border-radius: 0;
     padding: 9px 5px;
     min-height: 40px;
-    color:white;
+    color: white;
     font-size: 18px;
-    font-weight: normal; }
-    .login-wrapper .form-control::-webkit-input-placeholder {
-      color: #b0adad; }
-    .login-wrapper .form-control::-moz-placeholder {
-      color: #b0adad; }
-    .login-wrapper .form-control:-ms-input-placeholder {
-      color: #b0adad; }
-    .login-wrapper .form-control::-ms-input-placeholder {
-      color: #b0adad; }
-    .login-wrapper .form-control::placeholder {
-      color: #b0adad; }
+    font-weight: normal;
+  }
+
+  .login-wrapper .form-control::-webkit-input-placeholder {
+    color: #b0adad;
+  }
+
+  .login-wrapper .form-control::-moz-placeholder {
+    color: #b0adad;
+  }
+
+  .login-wrapper .form-control:-ms-input-placeholder {
+    color: #b0adad;
+  }
+
+  .login-wrapper .form-control::-ms-input-placeholder {
+    color: #b0adad;
+  }
+
+  .login-wrapper .form-control::placeholder {
+    color: #b0adad;
+  }
+
   .login-wrapper .login-btn {
     padding: 13px 20px;
     border-color: #cda45e;
-    border:1px solid;
-    
+    border: 1px solid;
+
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
     color: #cda45e;
-    margin-bottom: 14px; }
-    .login-wrapper .login-btn:hover {
-      border: 1px solid #cda45e;
-      background-color: #fff;
-      color: #fdbb28; }
+    margin-bottom: 14px;
+  }
+
+  .login-wrapper .login-btn:hover {
+    border: 1px solid #cda45e;
+    background-color: #fff;
+    color: #fdbb28;
+  }
+
   .login-wrapper a.forgot-password-link {
     color: #080808;
     font-size: 14px;
     text-decoration: underline;
     display: inline-block;
-    margin-bottom: 54px; }
-    @media (max-width: 575px) {
-      .login-wrapper a.forgot-password-link {
-        margin-bottom: 16px; } }
+    margin-bottom: 54px;
+  }
+
+  @media (max-width: 575px) {
+    .login-wrapper a.forgot-password-link {
+      margin-bottom: 16px;
+    }
+  }
+
   .login-wrapper-footer-text {
     font-size: 16px;
     color: #fff;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+  }
 
-.login-title {
-  font-size: 30px;
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 25px; }
+  .login-title {
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
 
-.login-img {
-  width: 100%;
-  height: 100vh;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: left;
-     object-position: left; }
+  .login-img {
+    width: 100%;
+    height: 100vh;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: left;
+    object-position: left;
+  }
 
-/*# sourceMappingURL=login.css.map */
-
+  /*# sourceMappingURL=login.css.map */
 </style>
+
 <body>
-  
-  
-<?php include('../../../templates/navbar.php'); ?>
+
+
+  <?php include('../../../templates/navbar.php'); ?>
 
 
 
 
 
-<main>
+  <main>
     <div class="container-fluid">
       <div class="row">
 
 
         <div class="col-sm-7 login-section-wrapper">
-        <center>
-        <div class="brand-wrapper"><br><br>
-            <img src="https://www.zarla.com/images/zarla-dulce-pan-1x1-2400x2400-20210604-b78c7qwmgxkt764xw4rh.png?crop=1:1,smart&width=250&dpr=2" alt="logo" class="logo">
-          </div>
-          <div class="login-wrapper my-auto">
-            <h1 class="login-title">Iniciar Sesion</h1>
-            <form id ="form1" action="" method="post">
-              <div class="form-group">
-                <label for="email">Numero de Telefono</label>
-                <input type="number" name="phone" id="number" class="form-control" placeholder="Numero de telefono">
-              </div>
-              
-              <div class="form-group mb-4">
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña">
-              </div>
+          <center>
+            <div class="brand-wrapper"><br><br>
+              <img src="https://www.zarla.com/images/zarla-dulce-pan-1x1-2400x2400-20210604-b78c7qwmgxkt764xw4rh.png?crop=1:1,smart&width=250&dpr=2" alt="logo" class="logo">
+            </div>
+            <div class="login-wrapper my-auto">
+              <h1 class="login-title">Iniciar Sesion</h1>
+              <form id="form1" action="" method="post">
+                <div class="form-group">
+                  <label for="email">Numero de Telefono</label>
+                  <input type="number" name="phone" id="number" class="form-control" placeholder="Numero de telefono">
+                </div>
 
-              <input name="login" id="login" class="btn btn-block login-btn" type="submit" onclick="enviarFormularios()" value="Iniciar Sesion">
+                <div class="form-group mb-4">
+                  <label for="password">Contraseña</label>
+                  <input type="password" name="password" id="password" class="form-control" placeholder="Ingrese su contraseña">
+                </div>
 
-            </form>
+                <input name="login" id="login" class="btn btn-block login-btn" type="submit" onclick="enviarFormularios()" value="Iniciar Sesion">
+
+              </form>
 
 
-           
-            
-            
-            
 
-            <?php
-    if($_POST){
 
-             if(!password_verify($password,$password_hash)) { 
-                 echo  "
+
+
+
+              <?php
+              if ($_POST) {
+
+                if (!password_verify($password, $password_hash)) {
+                  echo  "
                  <br><br>
                  <div class='alert alert-danger text-center' role='alert' style='margin-left:10%; margin-top:-2%; margin-bottom:7%; margin-right:10%;'>
                  Contraseña o numero incorrecto.
                </div>
-               ";  
-               }
-        
+               ";
+                }
               }
-      
-         
-         ?> 
 
-            <a href="#!" class="forgot-password-link"style="color:#cda45e; text-decoration:none">Olvido su contraseña?</a>
-            <p class="login-wrapper-footer-text">No tiene una cuenta? <a href="/panaderia/src/views/user/registrar.php" class="t" style="color: #cda45e">Registrese aqui!</a></p>
-          </div>
-        </center>
+
+              ?>
+
+              <a href="#!" class="forgot-password-link" style="color:#cda45e; text-decoration:none">Olvido su contraseña?</a>
+              <p class="login-wrapper-footer-text">No tiene una cuenta? <a href="/panaderia/src/views/user/registrar.php" class="t" style="color: #cda45e">Registrese aqui!</a></p>
+            </div>
+          </center>
         </div>
 
-        
+
         <div class="col-sm-5 px-0 d-none d-sm-block">
           <img src="w.jpeg" alt="login image" class="login-img">
         </div>
@@ -288,4 +328,3 @@ error_reporting(E_ERROR | E_PARSE);
   <!-- Template Main JS File -->
   <script src="../../../assets/js/main.js"></script>
 </body>
-
