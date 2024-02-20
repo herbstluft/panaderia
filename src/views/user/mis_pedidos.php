@@ -3,19 +3,21 @@
 use MyApp\data\Database;
 
 require("../../../vendor/autoload.php");
+
 $db = new Database;
+
+session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Mis pedidos</title>
-
     <!-- Favicons -->
-    <link rel="icon" href="../../../assets/svg/delivery-secure-01.svg" type="image/x-icon">
+    <link rel="icon" href="../../../assets/svg/shopping-cart.svg" type="image/x-icon">
     <link href="../../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -32,13 +34,41 @@ $db = new Database;
 
     <!-- Template Main CSS File -->
     <link href="../../../assets/css/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../../../assets/css/mis-pedidos.css">
 </head>
 
-<body>
-    <?php include('../../../templates/navbar.php') ?>
+<body class="vh-100">
+    <?php include('../../../templates/navbar.php'); ?>
+
+    <section class="p-0 h-75">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-sm-6 col-md-6 col-lg-3 align-self-center">
+                    <div class="food-card">
+                        <div class="food-card_img">
+                            <img src="../../../assets/img/hero-bg.jpg" alt="">
+                        </div>
+                        <div class="food-card_content">
+                            <div class="food-card_title-section">
+                                <a href="#!" class="food-card_author text-success fw-bold">Burger</a>
+                                <a href="#!" class="food-card_title">Double Cheese Potato Burger</a>
+                            </div>
+                            <div class="food-card_bottom-section">
+                                <div class="space-between">
+                                    <div>
+                                        <span class="fa fa-fire"></span> 220 - 280 Kcal
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <?php include('../../../templates/footer.php'); ?>
+
 </body>
 
 </html>

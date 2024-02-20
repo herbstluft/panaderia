@@ -38,14 +38,14 @@ session_start();
     <!-- Template Main CSS File -->
     <link href="../../../assets/css/style.css" rel="stylesheet">
 
-   
+
 </head>
 
 <body>
 
 
-<?php include('../../../templates/navbar.php'); ?>
-<br>
+    <?php include('../../../templates/navbar.php'); ?>
+    <br>
 
     <main class="container p-5">
         <article class="w-100 h-100 row flex-md-row flex-sm-column">
@@ -55,35 +55,53 @@ session_start();
                 </div>
                 <div class="m-auto h-100 d-flex justify-content-center">
                     <?php
-                    $sql_carrito = "SELECT 'img_productos.*', 'productos.*', 'detalle_orden.*', 'orden.*'
-                                FROM detalle_orden 
-                                INNER JOIN orden ON detalle_orden.id_usuario = orden.id_usuario
-                                INNER JOIN productos ON detalle_orden.id_producto = productos.id_producto 
-                                INNER JOIN img_productos ON productos.id_producto = img_productos.id_producto";
-                    $carrto_all = $db->seleccionarDatos($sql_carrito);
+                    if (isset($_POST['id_usuario'])) {
+                        $id_usuario = $_POST['usuario'];
+                        $sql_carrito = "SELECT do.*, p.*, ip.*
+                                    FROM detalle_orden do
+                                    JOIN productos p ON do.id_producto = p.id_producto
+                                    LEFT JOIN img_productos ip ON p.id_producto = ip.id_producto
+                                    WHERE do.id_usuario = $id_usuario";
+                        $carrto_all = $db->seleccionarDatos($sql_carrito);
 
-                    if (empty($carrto_all)) {
+                        if (empty($carrto_all)) {
                     ?>
 
-                        <div class="d-flex align-items-center gap-3" style="opacity: 30%;">
-                            <img src="../../../assets/img/oops.png" alt="" width="72px">
-                            <span>No has agregado <br> nada a tu carrito</span>
-                        </div>
+                            <div class="d-flex align-items-center gap-3" style="opacity: 30%;">
+                                <img src="../../../assets/img/oops.png" alt="" width="72px">
+                                <span>No has agregado <br> nada a tu carrito</span>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <table class="table table-dark text-end">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <?php
+                                        foreach ($carrito_all as $producto) {
+                                        ?>
+                                            <td> <?php $producto['nombre_imagen'] ?> </td>
+                                            <td> <?php $producto['producto'] ?> </td>
+                                            <td> <?php $producto['precio'] ?> </td>
+                                            <td> <?php $producto['cantidad'] ?> </td>
+                                            <td> <?php $producto['subtotal'] ?> </td>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tr>
+                                </tbody>
+                            </table>
                     <?php
-                    } else {
-                    ?>
-                        <table class="table table-dark text-end">
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <td>Producto</td>
-                                    <td>Precio</td>
-                                    <td>Cantidad</td>
-                                    <td>Subtotal</td>
-                                </tr>
-                            </thead>
-                        </table>
-                    <?php
+                        }
                     }
                     ?>
                 </div>
