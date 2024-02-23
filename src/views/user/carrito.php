@@ -48,6 +48,19 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
     <!-- Template Main CSS File -->
     <link href="../../../assets/css/style.css" rel="stylesheet">
 
+    <style>
+        .fixed-top {
+            position: static;
+        }
+
+        @media (min-width: 768px) {
+            .border-md-end {
+                border-right: 1px solid #dee2e6;
+                /* Puedes ajustar el color según tus necesidades */
+            }
+        }
+    </style>
+
 
 </head>
 
