@@ -127,31 +127,38 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                 <div class="h-100 card bg-transparent border p-2 ms-md-4">
                     <div class="card-body">
                         <h4 class="card-title text-warning border-bottom ps-3 pb-4">Total del carrito</h4>
+
                         <?php
-                        if (empty($carrito_all)) {
-                        ?>
-                            <div class="text-light d-flex justify-content-between my-2 p-2">
-                                <span>Número de órden:</span>
-                                <span>0</span>
-                            </div>
-                            <div class="text-light d-flex justify-content-between my-2 p-2">
-                                <span>Tipo de entrega:</span>
-                                <span>-</span>
-                            </div>
-                            <div class="text-light d-flex justify-content-between my-2 p-2">
-                                <span>Fecha de emisión:</span>
-                                <span>-</span>
-                            </div>
-                            <div class="text-light d-flex justify-content-between border-top my-2 p-2 mt-4">
-                                <span>Total:</span>
-                                <span>0</span>
-                            </div>
-                            <form action="">
-                                <button class="w-100 rounded-2 bg-warning text-light opacity-50" disabled style="cursor: pointer;">Pagar</button>
-                            </form>
-                        <?php
+                        $num_orden;
+                        $tipo_entrega;
+                        $fecha_emision;
+                        $total = 0;
+                        foreach ($carrito_all as $producto) {
+                            $num_orden = $producto['id_orden'];
+                            $tipo_entrega = $producto['tipo_entrega'];
+                            $fecha_emision = $producto['fecha'];
+                            $total += $producto['cantidad'] * $producto['precio'];
                         }
                         ?>
+                        <div class="text-light d-flex justify-content-between my-2 p-2">
+                            <span>Número de órden:</span>
+                            <span><?php echo $num_orden = (!empty($num_orden)) ?  $num_orden : '-'; ?></span>
+                        </div>
+                        <div class="text-light d-flex justify-content-between my-2 p-2">
+                            <span>Tipo de entrega:</span>
+                            <span> <?php echo $tipo_entrega = (!empty($tipo_entrega)) ? $tipo_entrega : 'Por definir'; ?> </span>
+                        </div>
+                        <div class="text-light d-flex justify-content-between my-2 p-2">
+                            <span>Fecha de emisión:</span>
+                            <span> <?php echo $fecha_emision = (!empty($fecha_emision)) ? $fecha_emision : '0-0-0000'; ?> </span>
+                        </div>
+                        <div class="text-light d-flex justify-content-between border-top my-2 p-2 mt-4">
+                            <span>Total:</span>
+                            <span> <?php echo $total = (!empty($total)) ? $total : '9'; ?> </span>
+                        </div>
+                        <form action="">
+                            <button class="w-100 rounded-2 bg-warning text-light opacity-50" disabled style="cursor: pointer;">Pagar</button>
+                        </form>
                     </div>
                 </div>
             </section>
