@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 23, 2024 at 06:35 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: localhost
+-- Tiempo de generación: 24-02-2024 a las 07:25:08
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `panaderia`
+-- Base de datos: `panaderia`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentarios_quejas`
+-- Estructura de tabla para la tabla `comentarios_quejas`
 --
 
 CREATE TABLE `comentarios_quejas` (
@@ -39,7 +39,7 @@ CREATE TABLE `comentarios_quejas` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalle_orden`
+-- Estructura de tabla para la tabla `detalle_orden`
 --
 
 CREATE TABLE `detalle_orden` (
@@ -53,10 +53,19 @@ CREATE TABLE `detalle_orden` (
   `tipo_entrega` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `detalle_orden`
+--
+
+INSERT INTO `detalle_orden` (`id_do`, `id_producto`, `cantidad`, `id_usuario`, `estatus`, `fecha_detalle`, `id_orden`, `tipo_entrega`) VALUES
+(1, 1, 218, 1, 0, '2024-02-24 06:24:44', 2, NULL),
+(3, 2, 2, 1, 0, '2024-02-24 06:14:30', 2, NULL),
+(4, 5, 2, 1, 0, '2024-02-24 06:16:07', 2, NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `img_productos`
+-- Estructura de tabla para la tabla `img_productos`
 --
 
 CREATE TABLE `img_productos` (
@@ -65,10 +74,21 @@ CREATE TABLE `img_productos` (
   `nombre_imagen` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `img_productos`
+--
+
+INSERT INTO `img_productos` (`id_img_productos`, `id_producto`, `nombre_imagen`) VALUES
+(1, 1, 'hamburguesa.jpg'),
+(2, 2, 'hotdog.jpg'),
+(3, 3, 'cocodrilo.jpg'),
+(4, 4, 'baguette.jpg'),
+(5, 5, 'brioche.jpg');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orden`
+-- Estructura de tabla para la tabla `orden`
 --
 
 CREATE TABLE `orden` (
@@ -77,10 +97,17 @@ CREATE TABLE `orden` (
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `orden`
+--
+
+INSERT INTO `orden` (`id_orden`, `fecha`, `id_usuario`) VALUES
+(2, '2024-02-24 03:01:12', 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personas`
+-- Estructura de tabla para la tabla `personas`
 --
 
 CREATE TABLE `personas` (
@@ -91,10 +118,17 @@ CREATE TABLE `personas` (
   `correo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `personas`
+--
+
+INSERT INTO `personas` (`id_persona`, `nombre`, `apellido`, `info`, `correo`) VALUES
+(1, 'Juan Angel', 'Castañeda ', ' ¡Hola! Estoy usando El Pan Machin.', 'herbstluftwm.28@gmail.com');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productos`
+-- Estructura de tabla para la tabla `productos`
 --
 
 CREATE TABLE `productos` (
@@ -107,10 +141,21 @@ CREATE TABLE `productos` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `nom_producto`, `precio`, `descripcion`, `existencia`, `estado`, `fecha`) VALUES
+(1, 'Pan Hamburguesa', 5, 'Esponjoso con la Excelencia de Harinas Finas, Levadura Fresca, Aceite de Oliva y un Toque de Miel.', 20, NULL, '2024-02-24 04:19:30'),
+(2, 'Pan Hotdog', 9, 'La Base Perfecta para Tu Explosión de Sabores, Hecho con Esmero y Sabor Inigualable.', 34, NULL, '2024-02-24 00:41:32'),
+(3, 'Pan Cocodrilo', 12, 'Crujiente por Fuera, Tierno por Dentro, una Experiencia Única de Harinas Premium y Técnicas Artesanales.', 33, NULL, '2024-02-24 00:40:18'),
+(4, 'Pan Baguette', 7, 'La Elegancia del Pan Crujiente por Fuera, Suave por Dentro, Hecho con las Mejores Harinas para una Experiencia Auténtica.', 16, NULL, '2024-02-24 00:40:18'),
+(5, 'Pan Brioche', 8, 'Delicadeza en Cada Mordisco, la Fusión Perfecta de Mantequilla, Huevos y Harinas Selectas para un Placer Dulce y Esponjoso.', 17, NULL, '2024-02-24 00:40:45');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_entrega`
+-- Estructura de tabla para la tabla `tipo_entrega`
 --
 
 CREATE TABLE `tipo_entrega` (
@@ -121,7 +166,7 @@ CREATE TABLE `tipo_entrega` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -136,18 +181,25 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `telefono`, `contrasena`, `id_persona`, `codigo_reset_passwd`, `estado`, `tipo_usuario`, `imagen`) VALUES
+(1, 123, '$2y$10$0LeW0bRzgZXHVRgHxazPa.vVz2YqPF/jYT/YrAzybKWskac4QWPzy', 1, NULL, NULL, 1, 'profile.webp');
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `comentarios_quejas`
+-- Indices de la tabla `comentarios_quejas`
 --
 ALTER TABLE `comentarios_quejas`
   ADD PRIMARY KEY (`id_retroalimentacion`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `detalle_orden`
+-- Indices de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
   ADD PRIMARY KEY (`id_do`),
@@ -157,108 +209,108 @@ ALTER TABLE `detalle_orden`
   ADD KEY `tipo_entrega` (`tipo_entrega`);
 
 --
--- Indexes for table `img_productos`
+-- Indices de la tabla `img_productos`
 --
 ALTER TABLE `img_productos`
   ADD PRIMARY KEY (`id_img_productos`),
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indexes for table `orden`
+-- Indices de la tabla `orden`
 --
 ALTER TABLE `orden`
   ADD PRIMARY KEY (`id_orden`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indexes for table `personas`
+-- Indices de la tabla `personas`
 --
 ALTER TABLE `personas`
   ADD PRIMARY KEY (`id_persona`);
 
 --
--- Indexes for table `productos`
+-- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`);
 
 --
--- Indexes for table `tipo_entrega`
+-- Indices de la tabla `tipo_entrega`
 --
 ALTER TABLE `tipo_entrega`
   ADD PRIMARY KEY (`id_tipo_entrega`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `fk_usuarios_personas` (`id_persona`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `comentarios_quejas`
+-- AUTO_INCREMENT de la tabla `comentarios_quejas`
 --
 ALTER TABLE `comentarios_quejas`
   MODIFY `id_retroalimentacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `detalle_orden`
+-- AUTO_INCREMENT de la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
-  MODIFY `id_do` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_do` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `img_productos`
+-- AUTO_INCREMENT de la tabla `img_productos`
 --
 ALTER TABLE `img_productos`
-  MODIFY `id_img_productos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_img_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `orden`
+-- AUTO_INCREMENT de la tabla `orden`
 --
 ALTER TABLE `orden`
-  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `personas`
+-- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `productos`
+-- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `tipo_entrega`
+-- AUTO_INCREMENT de la tabla `tipo_entrega`
 --
 ALTER TABLE `tipo_entrega`
   MODIFY `id_tipo_entrega` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `comentarios_quejas`
+-- Filtros para la tabla `comentarios_quejas`
 --
 ALTER TABLE `comentarios_quejas`
   ADD CONSTRAINT `comentarios_quejas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Constraints for table `detalle_orden`
+-- Filtros para la tabla `detalle_orden`
 --
 ALTER TABLE `detalle_orden`
   ADD CONSTRAINT `detalle_orden_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`),
@@ -267,19 +319,19 @@ ALTER TABLE `detalle_orden`
   ADD CONSTRAINT `detalle_orden_ibfk_4` FOREIGN KEY (`tipo_entrega`) REFERENCES `tipo_entrega` (`id_tipo_entrega`);
 
 --
--- Constraints for table `img_productos`
+-- Filtros para la tabla `img_productos`
 --
 ALTER TABLE `img_productos`
   ADD CONSTRAINT `img_productos_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`);
 
 --
--- Constraints for table `orden`
+-- Filtros para la tabla `orden`
 --
 ALTER TABLE `orden`
   ADD CONSTRAINT `orden_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Constraints for table `usuarios`
+-- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `fk_usuarios_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`);
