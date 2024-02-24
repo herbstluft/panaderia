@@ -81,6 +81,7 @@ $opiniones_all = $db->seleccionarDatos($sql_opiniones);
 
 <body>
 
+
   <?php include('templates/navbar.php'); ?>
 
   <!-- ======= Hero Section ======= -->
