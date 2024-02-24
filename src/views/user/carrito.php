@@ -154,7 +154,7 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                         </div>
                         <div class="text-light d-flex justify-content-between border-top my-2 p-2 mt-4">
                             <span>Total:</span>
-                            <span> <?php echo $total = (!empty($total)) ? $total : '9'; ?> </span>
+                            <span> $<?php echo $total = (!empty($total)) ? $total : '9'; ?> </span>
                         </div>
                         <form action="">
                             <button class="w-100 rounded-2 bg-warning text-light opacity-50" disabled style="cursor: pointer;">Pagar</button>
