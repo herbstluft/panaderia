@@ -36,6 +36,8 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Vendor CSS Files -->
     <link href="../../../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
     <link href="../../../assets/vendor/aos/aos.css" rel="stylesheet">
@@ -90,7 +92,7 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                     <?php
                     } else {
                     ?>
-                        <table class="table table-dark text-end">
+                        <table class="table table-dark text-end table-responsive">
                             <thead>
                                 <tr>
                                     <th></th>
