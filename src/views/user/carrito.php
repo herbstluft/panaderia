@@ -14,7 +14,7 @@ $sql_carrito = "SELECT detalle_orden.*, productos.*, ip.*
                 FROM detalle_orden
                 JOIN productos ON detalle_orden.id_producto = productos.id_producto
                 LEFT JOIN img_productos ip ON productos.id_producto = ip.id_producto
-                WHERE detalle_orden.id_usuario = '$id_usuario'";
+                WHERE detalle_orden.id_usuario = '$id_usuario' AND detalle_orden.estatus = 0";
 $carrito_all = $db->seleccionarDatos($sql_carrito);
 
 ?>
