@@ -72,11 +72,11 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
     <?php include('../../../templates/navbar.php'); ?>
     <br>
 
-    <main class="container p-5">
+    <main class="container p-1">
         <article class="w-100 h-100 row flex-md-row flex-sm-column">
             <section class="col-md-8 border-md-end col-sm-12">
                 <div class="border-bottom">
-                    <h4 class="text-warning p-2">Carrito</h4>
+                    <h2 class="text-warning p-2">Carrito</h2>
                 </div>
                 <div class="m-auto h-100 d-flex justify-content-center">
                     <?php
@@ -92,25 +92,31 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                     <?php
                     } else {
                     ?>
-                        <div class="table-responsive w-100">
-                            <table class="table table-dark text-start">
-                                <thead>
+                        <div class="table-responsive w-100" >
+                            <table class="table  text-center text-middle table-borderless" style="border-radius:20px; background: transparent;" >
+                                <thead >
                                     <tr>
-                                        <th>Imagen</th>
-                                        <th>Producto</th>
-                                        <th>Precio</th>
-                                        <th>Cantidad</th>
+                                        <th style="background:transparent; color:white; padding:25px">Imagen </th>
+                                        <th style="background:transparent; color:white; padding:25px">Producto</th>
+                                        <th style="background:transparent; color:white; padding:25px">Precio</th>
+                                        <th style="background:transparent; color:white; padding:25px">Cantidad</th>
+                                        <th style="background:transparent; color:white; padding:25px">Acciones</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     <?php
                                     foreach ($carrito_all as $producto) {
                                     ?>
                                         <tr>
-                                            <td> <?php echo $producto['nombre_imagen'] ?> </td>
-                                            <td> <?php echo $producto['nom_producto'] ?> </td>
-                                            <td> <?php echo $producto['precio'] ?> </td>
-                                            <td> <?php echo $producto['cantidad'] ?> </td>
+                                            
+                                            <td style="background:transparent">  <img style="width:80px; border-radius:20px; heigth:auto"src="/panaderia/assets/img/images_product/<?php echo $producto['nombre_imagen'] ?>" alt="">  </td>
+                                            <td style="background:transparent; color:white"> <?php echo $producto['nom_producto'] ?> <hr style="opacity:0.1; color:white"> </td>
+                                            <td style="background:transparent; color:white"> <?php echo "$".number_format($producto['precio'], 2, ',', '.');   ?> </td>
+                                            <td style="background:transparent; color:white"> <input style="background:transparent;color:white; border:none; outline:none; text-align:center" type="number" value="<?php  echo $producto['cantidad'] ?>"  min="1" required>  </td>
+                                            <td style="background:transparent; color:white">  <button type="button" class="btn btn-danger">Eliminar</button> </td>
+
                                         </tr>
                                     <?php
                                     }
@@ -123,7 +129,7 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                     ?>
                 </div>
             </section>
-            <section class="col-md-4 col-sm-12">
+            <section class="col-md-4 col-sm-12" style="margin-top:-60px">
                 <div class="h-100 card bg-transparent border p-2 ms-md-4">
                     <div class="card-body">
                         <h4 class="card-title text-warning border-bottom ps-3 pb-4">Total del carrito</h4>
@@ -152,9 +158,10 @@ $carrito_all = $db->seleccionarDatos($sql_carrito);
                             <span>Fecha de emisión:</span>
                             <span> <?php echo $fecha_emision = (!empty($fecha_emision)) ? $fecha_emision : '0-0-0000'; ?> </span>
                         </div>
+                        <br>
                         <div class="text-light d-flex justify-content-between border-top my-2 p-2 mt-4">
                             <span>Total:</span>
-                            <span> $<?php echo $total = (!empty($total)) ? $total : '9'; ?> </span>
+                            <span> $<?php echo (!empty($total)) ? number_format($total, 2, ',', '.') : '$9.00'; ?> </span>
                         </div>
                         <form action="">
                             <button class="w-100 rounded-2 bg-warning text-light opacity-50" disabled style="cursor: pointer;">Pagar</button>

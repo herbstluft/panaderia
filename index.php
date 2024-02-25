@@ -533,8 +533,8 @@ $opiniones_all = $db->seleccionarDatos($sql_opiniones);
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-5.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/11.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/11.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
@@ -549,8 +549,8 @@ $opiniones_all = $db->seleccionarDatos($sql_opiniones);
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-7.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
+              <a href="assets/img/gallery/10.jpeg" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/gallery/10.jpeg" alt="" class="img-fluid">
               </a>
             </div>
           </div>
