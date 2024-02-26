@@ -85,7 +85,13 @@
               <button type="button" style="background:none" class="btn position-relative">
 
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  99+
+                  <?php
+$sql="SELECT count(detalle_orden.id_do) as 'cantidad_productos' from orden INNER JOIN detalle_orden on detalle_orden.id_orden = orden.id_orden";
+$s = $db->seleccionarDatos($sql);
+foreach ($s as $s)
+
+echo $s['cantidad_productos']. '+';
+                  ?>
                   <span class="visually-hidden">unread messages</span>
                 </span>
               </button>
