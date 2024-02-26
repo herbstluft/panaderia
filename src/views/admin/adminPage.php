@@ -7,12 +7,14 @@ $db = new Database;
 
 session_start();
 
+$db = new Database;
+
 if (isset($_SESSION['id_usuario'])) {
     $id = $_SESSION['id_usuario'];
     $sql = "SELECT * FROM usuarios 
             INNER JOIN personas 
             ON personas.id_persona=usuarios.id_persona 
-            WHERE usuarios.id_usuario  = '$id' ";
+            WHERE usuarios.id_usuario  = '$id' AND usuarios.tipo_usuario = 0 ";
     $info_user = $db->seleccionarDatos($sql);
     foreach ($info_user as $usuario) {
 
@@ -25,19 +27,22 @@ if (isset($_SESSION['id_usuario'])) {
             <!-- Required meta tags -->
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <title>Corona Admin</title>
+            <title>Adiminstrador</title>
             <!-- plugins:css -->
             <link rel="stylesheet" href="../../../assets/vendor/mdi/css/materialdesignicons.min.css">
             <link rel="stylesheet" href="../../../assets/vendor/css/vendor.bundle.base.css">
             <!-- endinject -->
-            <!-- Plugin css for this page -->
-            <!-- End plugin css for this page -->
             <!-- Layout styles -->
             <link rel="stylesheet" href="../../../assets/vendor/css/style.css">
             <!-- End layout styles -->
 
             <!-- Material Symbols Icons Google -->
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+            <!-- Agrega un script para inicializar el gráfico usando JSDelivr -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
         </head>
 
         <body>
@@ -57,7 +62,7 @@ if (isset($_SESSION['id_usuario'])) {
                                     </div>
                                     <div class="profile-name">
                                         <h5 class="mb-0 font-weight-normal"> <?php echo $usuario['nombre']; ?> </h5>
-                                        <span>Gold Member</span>
+                                        <span>Administrador</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,10 +149,14 @@ if (isset($_SESSION['id_usuario'])) {
                         <div class="content-wrapper">
                             <div class="grilla">
                                 <div class="card-1">
-                                    <div id="chart_container" style="width: 100%; height: 100%;"></div>
+                                    <?php include('../../../graphics/ganancias-totales/ganancias-meses.php') ?>
                                 </div>
-                                <div class="card-2">Ganancias en este día</div>
-                                <div class="card-3">Ganancias totales</div>
+                                <div class="card-2">
+                                    <?php include('../../../graphics/ganancias-totales/ganancias-dia.php') ?>
+                                </div>
+                                <div class="card-3">
+                                    <?php include('../../../graphics/ganancias-totales/ganancias-totales.php') ?>
+                                </div>
                             </div>
                         </div>
                         <!-- content-wrapper ends -->
@@ -157,6 +166,8 @@ if (isset($_SESSION['id_usuario'])) {
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
+            <!-- Carga de ajax -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <!-- container-scroller -->
             <!-- plugins:js -->
             <script src="../../../assets/vendor/js/vendor.bundle.base.js"></script>
@@ -176,10 +187,6 @@ if (isset($_SESSION['id_usuario'])) {
             <script src="../../../assets/js/dashboard.js"></script>
             <!-- End custom js for this page -->
 
-            <!-- Gráficas de google -->
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="../../../graphics/ganancias-totales/ganancias-totales.js"></script>
         </body>
 
         </html>
