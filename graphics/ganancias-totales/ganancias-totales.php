@@ -9,7 +9,7 @@ $ventas_totales = $db->seleccionarDatos($sql_ventas_totales);
 foreach ($ventas_totales as $ventasTotales) {
 ?>
 
-    <div class="h-100 card position-relative bg-transparent">
+    <div class="h-100 card position-relative bg-transparent responsive-totales">
         <div class="card-body p-0">
             <div class="card-title position-absolute m-0 p-3 h4">Ganancias totales</div>
             <div class="card-text w-100 h-100 d-flex justify-content-center align-items-center fs-2">

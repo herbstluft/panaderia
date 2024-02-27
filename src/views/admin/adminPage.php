@@ -149,7 +149,8 @@ if (isset($_SESSION['id_usuario'])) {
                         <div class="content-wrapper">
                             <div class="grilla">
                                 <div class="card-1">
-                                    <?php include('../../../graphics/ganancias-totales/ganancias-meses.php') ?>
+
+                                    <?php include('../../../graphics/ganancias-totales/scripts.ajax-db.meses/ganancias-meses.php') ?>
                                 </div>
                                 <div class="card-2">
                                     <?php include('../../../graphics/ganancias-totales/ganancias-dia.php') ?>
@@ -166,6 +167,42 @@ if (isset($_SESSION['id_usuario'])) {
                 </div>
                 <!-- page-body-wrapper ends -->
             </div>
+
+            <!-- Script ajax de los ejemplos -->
+
+
+            <!-- Se implementa ajax para acutalizar la tabla de ganancias-meses -->
+            <script>
+                function ajax() {
+                    const url = '/panaderia/graphics/ganancias-totales/scripts.ajax-db.meses/consulta-ganancia-meses.php';
+
+                    // Datos que deseas enviar en la solicitud POST
+                    const data = {};
+
+                    // Configuración de la solicitud
+                    const requestOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json' // Especifica que estás enviando datos en formato JSON
+                        },
+                        body: JSON.stringify(data) // Convierte el objeto 'data' a formato JSON
+                    };
+
+                    // Realiza la solicitud AJAX con fetch
+                    fetch(url, requestOptions)
+                        .then(response => response.json()) // Parsea la respuesta JSON
+                        .then(data => {
+                            // Hacer algo con los datos de respuesta si es necesario
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            // Manejar errores aquí
+                            console.error('Error en la solicitud AJAX:', error);
+                        });
+                }
+                ajax();
+            </script>
+
             <!-- Carga de ajax -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <!-- container-scroller -->

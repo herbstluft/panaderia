@@ -1,5 +1,10 @@
 <?php
 
+use MyApp\data\Database;
+
+require("../../../vendor/autoload.php");
+$db = new Database;
+
 // Aquí se hace la consulta para obtener las ventas totales ordenadas por mes
 $sql_ventas_mes = "SELECT do.id_do, SUM(do.cantidad) AS total_cantidad, p.nom_producto, p.precio, SUM(do.cantidad * p.precio) AS total_precio,
                YEAR(do.fecha_detalle) AS anio, MONTH(do.fecha_detalle) AS mes, DAY(do.fecha_detalle) AS dia
@@ -10,6 +15,8 @@ $sql_ventas_mes = "SELECT do.id_do, SUM(do.cantidad) AS total_cantidad, p.nom_pr
                GROUP BY do.id_do, p.nom_producto, p.precio, mes";
 
 $ventas = $db->seleccionarDatos($sql_ventas_mes);
+
+
 
 // Datos para mostrar los meses en el gráfic
 $labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -65,6 +72,6 @@ foreach ($ventas as $v_meses) {
     });
 </script>
 
-<div class="responsive">
+<div class="responsive-meses">
     <canvas style="overflow-x: auto;" id="ventas_meses"></canvas>
 </div>
