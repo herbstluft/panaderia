@@ -7,6 +7,18 @@ require("../../vendor/autoload.php");
 $db = new Database;
 
 session_start();
+
+$id_usuario = $_SESSION['id_usuario'];
+    
+$productos = "SELECT *, IF(estatus = '2', 'vendido', estatus) AS estatus 
+                FROM detalle_orden 
+                INNER JOIN img_productos ON detalle_orden.id_producto = img_productos.id_producto 
+                INNER JOIN usuarios ON detalle_orden.id_usuario = usuarios.id_usuario
+                INNER JOIN productos ON detalle_orden.id_producto = productos.id_producto
+                WHERE detalle_orden.estatus = 2 and usuarios.id_usuario = '$id_usuario'";
+
+
+    $productos_all = $db->seleccionarDatos($productos);
 ?>
 
 <!DOCTYPE html>
@@ -50,23 +62,29 @@ session_start();
 <br>
 
 <h1>Historial de compras</h1>
+
+<?php
+    $resultado = $db->ejecutarConsulta($productos);
+    while($row1 = $resultado -> fetch()){
+?>
+
 <section class="p-0 h-75">
         <div class="container h-100">
             <div class="row h-100">
                 <div class="col-sm-6 col-md-6 col-lg-3 align-self-center">
                     <div class="food-card">
                         <div class="food-card_img">
-                            <img src="../../assets/img/hero-bg.jpg" alt="">
+                            <img src="/panaderia/assets/img/images_product/<?php echo $row1['nombre_imagen'] ?>" id="imagen" alt="">
                         </div>
                         <div class="food-card_content">
                             <div class="food-card_title-section">
-                                <a href="#!" class="food-card_author text-success fw-bold">Vendido</a>
-                                <a href="#!" class="food-card_title">Double Cheese Potato Burger</a>
+                                <a href="#!" class="food-card_author text-success fw-bold"><?php echo $row1 ["estatus"]; ?></a>
+                                <a href="#!" class="food-card_title"><?php echo $row1 ["nom_producto"]; ?></a>
                             </div>
                             <div class="food-card_bottom-section">
                                 <div class="space-between">
                                     <div>
-                                        <span class="fa fa-fire"></span> 220 - 280 Kcal
+                                        <span class="fa fa-fire"></span> <?php echo $row1 ["cantidad"]; ?>
                                     </div>
                                 </div>
                             </div>
@@ -77,37 +95,15 @@ session_start();
         </div>
     </section>
 
-   
+<?php
+    }
+?>
 
 
-    <section class="p-0 h-75">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-sm-6 col-md-6 col-lg-3 align-self-center">
-                    <div class="food-card">
-                        <div class="food-card_img">
-                            <img src="../../assets/img/hero-bg.jpg" id="imagen" alt="">
-                        </div>
-                        <div class="food-card_content">
-                            <div class="food-card_title-section">
-                                <a href="#!" class="food-card_author text-success fw-bold">Vendido</a>
-                                <a href="#!" class="food-card_title">Double Cheese Potato Burger</a>
-                            </div>
-                            <div class="food-card_bottom-section">
-                                <div class="space-between">
-                                    <div>
-                                        <span class="fa fa-fire"></span> 220 - 280 Kcal
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
    
-    
+
 <?php include('../../templates/footer.php'); ?>
 
 </body>
