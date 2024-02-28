@@ -203,7 +203,12 @@ if (isset($_SESSION['id_usuario'])) {
                                         display: true,
                                         text: 'Ventas'
                                     }
+                                },
+                                animation: {
+                                    // Configuración para las animaciones
+                                    duration: animaciones ? 1000 : 0, // Duración de las animaciones en milisegundos (0 para desactivar)
                                 }
+
                             }
                         }
                     });

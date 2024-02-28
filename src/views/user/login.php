@@ -41,7 +41,7 @@ if ($_POST) {
     if ($decrypted['tipo_usuario'] == 0) {
       session_start();
       $_SESSION['admin'] = $id_usuario;
-      header("Location: /src/views/admin/index.php");
+      header("Location: /panaderia/src/views/admin/adminPage.php");
     } elseif ($decrypted['tipo_usuario'] == 1) {
       session_start();
       $_SESSION['user'] = $id_usuario;
