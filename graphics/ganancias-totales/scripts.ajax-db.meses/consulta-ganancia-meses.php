@@ -16,4 +16,13 @@ $sql_ventas_mes = "SELECT do.id_do, SUM(do.cantidad) AS total_cantidad, p.nom_pr
 
 $ventas = $db->seleccionarDatos($sql_ventas_mes);
 
-echo json_encode($ventas);
+$labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+$datos_meses = array_fill_keys($labels, 0);
+
+foreach ($ventas as $v_meses) {
+    $mes = $labels[$v_meses['mes'] - 1]; // Resta 1 por cómo funcionan los índices del array
+    $datos_meses[$mes] += $v_meses['total_precio'];
+}
+
+echo json_encode(['labels' => array_values($labels), 'datos_meses' => array_values($datos_meses)]);

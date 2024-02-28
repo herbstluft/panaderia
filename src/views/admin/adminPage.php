@@ -170,37 +170,79 @@ if (isset($_SESSION['id_usuario'])) {
 
             <!-- Script ajax de los ejemplos -->
 
-
             <!-- Se implementa ajax para acutalizar la tabla de ganancias-meses -->
             <script>
-                function ajax() {
+                function dibujarGrafico(labels, datos_meses) {
+                    // Configuración de datos para el gráfico
+                    var ctx = document.getElementById('ventas_meses').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Total Ventas',
+                                data: datos_meses,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            maintainAspectRatio: false, // Desactiva el ajuste automático del aspecto
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Meses'
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Ventas'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // ...
+
+                function obtenerVentasMensuales() {
+                    var timer;
+
                     const url = '/panaderia/graphics/ganancias-totales/scripts.ajax-db.meses/consulta-ganancia-meses.php';
 
-                    // Datos que deseas enviar en la solicitud POST
                     const data = {};
 
-                    // Configuración de la solicitud
                     const requestOptions = {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json' // Especifica que estás enviando datos en formato JSON
+                            'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(data) // Convierte el objeto 'data' a formato JSON
+                        body: JSON.stringify(data)
                     };
 
-                    // Realiza la solicitud AJAX con fetch
                     fetch(url, requestOptions)
-                        .then(response => response.json()) // Parsea la respuesta JSON
+                        .then(response => response.json())
                         .then(data => {
-                            // Hacer algo con los datos de respuesta si es necesario
+                            // Manipula los datos recibidos aquí
                             console.log(data);
+
+                            // Llama a la función para dibujar el gráfico con los nuevos datos
+                            dibujarGrafico(data.labels, data.datos_meses);
                         })
                         .catch(error => {
-                            // Manejar errores aquí
                             console.error('Error en la solicitud AJAX:', error);
                         });
                 }
-                ajax();
+
+                // Llama a la función cuando desees obtener las ventas mensuales
+                obtenerVentasMensuales();
+                timer = setInterval(obtenerVentasMensuales, 5000);
             </script>
 
             <!-- Carga de ajax -->
