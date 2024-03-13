@@ -142,6 +142,30 @@ if (isset($_SESSION['id_usuario'])) {
                     <!-- partial -->
                     <div class="main-panel">
                         <div class="content-wrapper">
+                            <div class="grilla">
+                                <div class="card-1">
+                                    <div class="responsive-meses">
+                                        <canvas style="overflow-x: auto;" id="ventas_meses"></canvas>
+                                    </div>
+                                </div>
+                                <div class="card-2">
+                                    <div class="responsive-dia">
+                                        <canvas style="overflow-x: auto;" id="ventas_dias"></canvas>
+                                    </div>
+                                </div>
+                                <div class="card-3" id="card3">
+                                </div>
+                                <div class="card-4">
+                                    <!-- Section: Timeline -->
+                                    <p class="h4 m-0 p-3 border-bottom border-light">Ventas recientes</p>
+                                    <section class="py-5 w-75 m-auto">
+                                        <ul class="timeline-with-icons" id="ventas_recientes">
+
+                                        </ul>
+                                    </section>
+                                    <!-- Section: Timeline -->
+                                </div>
+                            </div>
                             <div class="container-fluid">
                                 <form action="">
                                     <div class="d-flex flex-column">
