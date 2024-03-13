@@ -166,74 +166,15 @@ if (isset($_SESSION['id_usuario'])) {
                                     <!-- Section: Timeline -->
                                 </div>
                             </div>
-                            <div class="container-fluid">
-                                <form action="">
-                                    <div class="d-flex flex-column">
-                                        <label for="">Agregue una imagen</label>
-                                        <input type="file" />
-                                    </div>
 
-                                    <div>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <?php
-                            $queryProducto = "SELECT p.*, ip.nombre_imagen
-                                              FROM productos p
-                                              INNER JOIN img_productos ip
-                                              ON p.id_producto = ip.id_producto";
-                            $producto = $db->ejecutarConsulta($queryProducto);
-                            ?>
-                            <div class="table-responsive">
-                                <table class="table table-dark table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Producto</th>
-                                            <th>Precio</th>
-                                            <th>Descripción</th>
-                                            <th>Existencia</th>
-                                            <th>Estado</th>
-                                            <th class="badge text-wrap" style="width: 120px; line-height: 18px;">Editar datos del renglón</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach ($producto as $prodConsulta) {
-                                        ?>
-                                            <tr>
-                                                <td>
-                                                    <img src="/panaderia/assets/img/images_product/<?php echo $prodConsulta['nombre_imagen']; ?>" alt="">
-                                                </td>
-                                                <td> <?php echo $prodConsulta['nom_producto']; ?> </td>
-                                                <td class="text-center"> <?php echo $prodConsulta['precio']; ?> </td>
-                                                <td> <?php echo $prodConsulta['descripcion']; ?> </td>
-                                                <td class="text-center"> <?php echo $prodConsulta['existencia']; ?> </td>
-                                                <td class="text-center"> <?php echo $prodConsulta['estado']; ?> </td>
-                                                <td class="text-center">
-                                                    <a href="/panaderia/src/views/admin/admin-index.php?id=<?php echo $prodConsulta['id_producto']; ?>">
-                                                        <button type="button" class="btn btn-primary p-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                            <span class="material-symbols-outlined fs-6">
-                                                                contract_edit
-                                                            </span>
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>`
-                            </div>
                         </div>
-                        <!-- content-wrapper ends -->
-                        <!-- partial -->
                     </div>
-                    <!-- main-panel ends -->
+                    <!-- content-wrapper ends -->
+                    <!-- partial -->
                 </div>
-                <!-- page-body-wrapper ends -->
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
             </div>
 
             <!-- Se carga el ajax que actualiza las gráficas -->
