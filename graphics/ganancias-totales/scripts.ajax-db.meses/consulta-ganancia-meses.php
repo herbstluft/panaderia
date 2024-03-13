@@ -25,4 +25,4 @@ foreach ($ventas as $v_meses) {
     $datos_meses[$mes] += $v_meses['total_precio'];
 }
 
-echo json_encode(['labels' => array_values($labels), 'datos_meses' => array_values($datos_meses)]);
+echo json_encode(['labels_meses' => array_values($labels), 'datos_meses' => array_values($datos_meses)]);

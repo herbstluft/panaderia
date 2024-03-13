@@ -11,9 +11,9 @@ $db = new Database;
 
 if (isset($_SESSION['id_usuario'])) {
     $id = $_SESSION['id_usuario'];
-    $sql = "SELECT * FROM usuarios 
-            INNER JOIN personas 
-            ON personas.id_persona=usuarios.id_persona 
+    $sql = "SELECT * FROM usuarios
+            INNER JOIN personas
+            ON personas.id_persona=usuarios.id_persona
             WHERE usuarios.id_usuario  = '$id' AND usuarios.tipo_usuario = 0 ";
     $info_user = $db->seleccionarDatos($sql);
     foreach ($info_user as $usuario) {
@@ -42,10 +42,13 @@ if (isset($_SESSION['id_usuario'])) {
             <!-- Agrega un script para inicializar el gráfico usando JSDelivr -->
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+            <!-- Enlace a MDBootstrap -->
+            <link rel="stylesheet" href="../../../mdboostrap/css/mdb.min.css">
 
         </head>
 
         <body>
+
             <div class="container-scroller">
                 <!-- partial:partials/_sidebar.html -->
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -72,14 +75,6 @@ if (isset($_SESSION['id_usuario'])) {
                         </li>
                         <li class="nav-item menu-items">
                             <a class="nav-link d-flex gap-3" href="index.html">
-                                <span class="material-symbols-outlined" style="color: #50AB65;">
-                                    point_of_sale
-                                </span>
-                                <span class="menu-title">Ventas</span>
-                            </a>
-                        </li>
-                        <li class="nav-item menu-items">
-                            <a class="nav-link d-flex gap-3" href="index.html">
                                 <span class="material-symbols-outlined" style="color: #3058AD;">
                                     inventory_2
                                 </span>
@@ -89,7 +84,7 @@ if (isset($_SESSION['id_usuario'])) {
                     </ul>
                 </nav>
                 <!-- partial -->
-                <div class="container-fluid page-body-wrapper">
+                <div class="container-fluid page-body-wrapper p-0">
                     <!-- partial:partials/_navbar.html -->
                     <nav class="navbar p-0 fixed-top d-flex flex-row">
                         <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -147,17 +142,66 @@ if (isset($_SESSION['id_usuario'])) {
                     <!-- partial -->
                     <div class="main-panel">
                         <div class="content-wrapper">
-                            <div class="grilla">
-                                <div class="card-1">
+                            <div class="container-fluid">
+                                <form action="">
+                                    <div class="d-flex flex-column">
+                                        <label for="">Agregue una imagen</label>
+                                        <input type="file" />
+                                    </div>
 
-                                    <?php include('../../../graphics/ganancias-totales/scripts.ajax-db.meses/ganancias-meses.php') ?>
-                                </div>
-                                <div class="card-2">
-                                    <?php include('../../../graphics/ganancias-totales/ganancias-dia.php') ?>
-                                </div>
-                                <div class="card-3">
-                                    <?php include('../../../graphics/ganancias-totales/ganancias-totales.php') ?>
-                                </div>
+                                    <div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <?php
+                            $queryProducto = "SELECT p.*, ip.nombre_imagen
+                                              FROM productos p
+                                              INNER JOIN img_productos ip
+                                              ON p.id_producto = ip.id_producto";
+                            $producto = $db->ejecutarConsulta($queryProducto);
+                            ?>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Descripción</th>
+                                            <th>Existencia</th>
+                                            <th>Estado</th>
+                                            <th class="badge text-wrap" style="width: 120px; line-height: 18px;">Editar datos del renglón</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($producto as $prodConsulta) {
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <img src="/panaderia/assets/img/images_product/<?php echo $prodConsulta['nombre_imagen']; ?>" alt="">
+                                                </td>
+                                                <td> <?php echo $prodConsulta['nom_producto']; ?> </td>
+                                                <td class="text-center"> <?php echo $prodConsulta['precio']; ?> </td>
+                                                <td> <?php echo $prodConsulta['descripcion']; ?> </td>
+                                                <td class="text-center"> <?php echo $prodConsulta['existencia']; ?> </td>
+                                                <td class="text-center"> <?php echo $prodConsulta['estado']; ?> </td>
+                                                <td class="text-center">
+                                                    <a href="/panaderia/src/views/admin/admin-index.php?id=<?php echo $prodConsulta['id_producto']; ?>">
+                                                        <button type="button" class="btn btn-primary p-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                            <span class="material-symbols-outlined fs-6">
+                                                                contract_edit
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>`
                             </div>
                         </div>
                         <!-- content-wrapper ends -->
@@ -168,87 +212,8 @@ if (isset($_SESSION['id_usuario'])) {
                 <!-- page-body-wrapper ends -->
             </div>
 
-            <!-- Script ajax de los ejemplos -->
-
-            <!-- Se implementa ajax para acutalizar la tabla de ganancias-meses -->
-            <script>
-                function dibujarGrafico(labels, datos_meses) {
-                    // Configuración de datos para el gráfico
-                    var ctx = document.getElementById('ventas_meses').getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Total Ventas',
-                                data: datos_meses,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            maintainAspectRatio: false, // Desactiva el ajuste automático del aspecto
-                            scales: {
-                                x: {
-                                    display: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Meses'
-                                    }
-                                },
-                                y: {
-                                    display: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Ventas'
-                                    }
-                                },
-                                animation: {
-                                    // Configuración para las animaciones
-                                    duration: animaciones ? 1000 : 0, // Duración de las animaciones en milisegundos (0 para desactivar)
-                                }
-
-                            }
-                        }
-                    });
-                }
-
-                // ...
-
-                function obtenerVentasMensuales() {
-                    var timer;
-
-                    const url = '/panaderia/graphics/ganancias-totales/scripts.ajax-db.meses/consulta-ganancia-meses.php';
-
-                    const data = {};
-
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    };
-
-                    fetch(url, requestOptions)
-                        .then(response => response.json())
-                        .then(data => {
-                            // Manipula los datos recibidos aquí
-                            console.log(data);
-
-                            // Llama a la función para dibujar el gráfico con los nuevos datos
-                            dibujarGrafico(data.labels, data.datos_meses);
-                        })
-                        .catch(error => {
-                            console.error('Error en la solicitud AJAX:', error);
-                        });
-                }
-
-                // Llama a la función cuando desees obtener las ventas mensuales
-                obtenerVentasMensuales();
-                timer = setInterval(obtenerVentasMensuales, 5000);
-            </script>
+            <!-- Se carga el ajax que actualiza las gráficas -->
+            <script src="../../../graphics/ganancias-totales/consultas.ajax.js"></script>
 
             <!-- Carga de ajax -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
