@@ -74,7 +74,15 @@ if (isset($_SESSION['id_usuario'])) {
                             <span class="nav-link">Navigation</span>
                         </li>
                         <li class="nav-item menu-items">
-                            <a class="nav-link d-flex gap-3" href="index.html">
+                            <a class="nav-link d-flex gap-3" href="http://localhost/panaderia/src/views/admin/admin-index.php">
+                                <span class="material-symbols-outlined text-success">
+                                    monitoring
+                                </span>
+                                <span class="menu-title">Historial</span>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-items">
+                            <a class="nav-link d-flex gap-3" href="http://localhost/panaderia/src/views/admin/admin-inventario.php">
                                 <span class="material-symbols-outlined" style="color: #3058AD;">
                                     inventory_2
                                 </span>

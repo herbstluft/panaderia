@@ -74,7 +74,15 @@ if (isset($_SESSION['id_usuario'])) {
                             <span class="nav-link">Navigation</span>
                         </li>
                         <li class="nav-item menu-items">
-                            <a class="nav-link d-flex gap-3" href="index.html">
+                            <a class="nav-link d-flex gap-3" href="http://localhost/panaderia/src/views/admin/admin-index.php">
+                                <span class="material-symbols-outlined text-success">
+                                    monitoring
+                                </span>
+                                <span class="menu-title">Historial</span>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-items">
+                            <a class="nav-link d-flex gap-3" href="http://localhost/panaderia/src/views/admin/admin-inventario.php">
                                 <span class="material-symbols-outlined" style="color: #3058AD;">
                                     inventory_2
                                 </span>
@@ -142,17 +150,55 @@ if (isset($_SESSION['id_usuario'])) {
                     <!-- partial -->
                     <div class="main-panel">
                         <div class="content-wrapper">
-                            <div class="container-fluid">
-                                <form action="">
-                                    <div class="d-flex flex-column">
-                                        <label for="">Agregue una imagen</label>
-                                        <input type="file" />
-                                    </div>
+                            <div class="container-fluid ms-0 ps-0">
+                                <div class="ms-0">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Agregar producto
+                                    </button>
 
-                                    <div>
-
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar producto</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="">
+                                                        <div class="mb-3">
+                                                            <label for="formFile" class="form-label">Selecciona la imágen del producto</label>
+                                                            <input class="form-control" type="file" id="formFile">
+                                                        </div>
+                                                        <div class="mb-3 d-flex flex-column">
+                                                            <label class="form-label" for="nombre">Nombre</label>
+                                                            <input class="form-control text-white" type="text" id="nombre">
+                                                        </div>
+                                                        <div class="mb-3 d-flex flex-column">
+                                                            <label class="form-label" for="precio">Precio</label>
+                                                            <input class="form-control text-white" type="number" id="precio">
+                                                        </div>
+                                                        <div class="mb-3 d-flex flex-column">
+                                                            <label class="form-label" for="descripcion">Descripción</label>
+                                                            <input class="form-control text-white" type="text" id="descripcion">
+                                                        </div>
+                                                        <div class="mb-3 d-flex flex-column">
+                                                            <label class="form-label" for="existencia">Existencia</label>
+                                                            <input class="form-control text-white" type="number" id="existencia">
+                                                        </div>
+                                                        <div class="border-top py-3 pb-0 d-flex justify-content-end gap-2">
+                                                            <button type="button" class="btn btn-primary">Guardar cambios</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <?php
                             $queryProducto = "SELECT p.*, ip.nombre_imagen
